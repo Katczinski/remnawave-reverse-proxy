@@ -201,7 +201,7 @@ services:
       retries: 3
 
   remnawave:
-    image: remnawave/backend:2
+    image: remnawave/backend:latest
     container_name: remnawave
     hostname: remnawave
     <<: [*common, *logging, *env, *networks]
@@ -402,7 +402,7 @@ server {
     add_header Set-Cookie \$set_cookie_header;
 
     location / {
-        
+
         if (\$authorized = 0) {
             return 418;
         }
@@ -431,11 +431,11 @@ server {
 
     # OAuth2 Telegram login
     location ^~ /oauth2/ {
-        
+
         if (\$http_referer !~ "^https://oauth\.telegram\.org/") {
             return 444;
         }
-        
+
         proxy_http_version 1.1;
         proxy_pass http://remnawave;
         proxy_set_header Host \$host;
